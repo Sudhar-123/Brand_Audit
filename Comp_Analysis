@@ -1,0 +1,59 @@
+from bs4 import BeautifulSoup
+import requests
+import re
+#enter the brand name 1
+Name1=input("Enter the Brand 1: "  )
+
+def analyze_review(company):
+    response = requests.get(f"https://www.trustpilot.com/review/{company}")
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    # Find all review text elements using BeautifulSoup
+    review_elements = soup.find_all('p',
+                                    class_='typography_body-l__KUYFJ typography_appearance-default__AAY17 typography_color-black__5LYEn')
+
+    for review_element in review_elements:
+        review_text = review_element.text
+        print("Review :", review_text)
+
+        # Find the associated star rating (assuming it's in the same parent element)
+        star_element = review_element.find_previous('img', alt='Rated 1 out of 5 stars')
+        if star_element:
+            star_rating = star_element['alt'].split()[1]
+            print("Star Rating : ", star_rating)
+            print()
+analyze_review('swiggy.com')
+
+#enter the brand name 2
+Name2=input("Enter the Brand 2: " )
+
+def trustpilot_reviews(url):
+
+    res = requests.get(url)
+    soup = BeautifulSoup(res.text, 'html.parser')
+
+    review_tags = soup.find_all('p', class_='typography_body-l__KUYFJ typography_appearance-default__AAY17 typography_color-black__5LYEn')
+
+    for review_element in review_tags:
+        review_content = review_element.text
+        print("Review :", review_content)
+        star_element = review_element.find_previous('img', alt='Rated 1 out of 5 stars')
+        if star_element:
+            star_rating = star_element['alt'].split()[1]
+            print("Star Rating :", star_rating)
+        print()
+trustpilot_url = 'https://www.trustpilot.com/review/www.zomato.com'
+trustpilot_reviews(trustpilot_url)
+
+print("WHICH BRAND WOULD YOU LIKE?")
+Brand_Name=input("Enter the brand name : ")
+
+def swi ():
+            if  (Brand_Name == 'swiggy'):
+                      print("Swiggy is the first thing that comes to my mind when I think about ordering food.I use Swiggy so often that I don't call it ordering food anymore. It's now called 'Swiggy-ing' food Amazing UI. Everything seems intuitive and doesn't require much time to get used to.Great customer support, especially the chatbot. Seems very responsive, and I get my resolution quickly.Swiggy is a good platform for online food ordering and delivery from a variety of local restaurants. Swiggy offers a variety of features; the quality of food, packing, delivery time, and pricing are competitive and reasonably good. The app is user-friendly favoring the ease of use and implementation. Customer support is friendly and helpful. Although the frequency of use is relatively less, the ease of integration of the Swiggy app in our occasional food orders is indeed worth appreciating.")
+            elif   (Brand_Name == 'zomato'):
+                      print(" Most of the people don't like zomato .I recently had the displeasure of dining at a restaurant that left me utterly disappointed, and I feel compelled to share my experience on Zomato. From the moment I walked in, the ambiance was far from inviting – dimly lit, tacky decor, and an overall lack of cleanliness. The menu boasted a variety of dishes, but the taste failed to live up to the expectations set by the descriptions. I ordered the supposedly  signature dish, only to be met with a bland and uninspired concoction that lacked any distinct flavors. The service was equally dismal, with the staff displaying a complete lack of enthusiasm and attentiveness. To make matters worse, the portion sizes were laughably small, leaving me hungry and dissatisfied. I can confidently say that my visit to this establishment was a regrettable waste of time and money. Save yourself the trouble and opt for a more deserving dining experience elsewhere")
+            else:
+                        print("PLEASE ENTER THE CORRECT BRAND NAME.....")
+
+swi() #call the function.
